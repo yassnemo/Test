@@ -1,0 +1,31 @@
+{
+    "_comment": "This file gives permissions to access the active Terabox page, includes a background script, and links to content scripts for handling in-page automation.",
+    "manifest_version": 3,
+    "name": "Terabox Coin Collector",
+    "version": "1.0",
+    "description": "Automatically collect coins in Terabox games like Gold Miner and Gem Merge.",
+    "permissions": ["activeTab", "scripting"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["*://*.terabox.com/*"],
+        "js": ["content.js"]
+      }
+    ],
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+          "16": "images/icon16.png",
+          "48": "images/icon48.png",
+          "128": "images/icon128.png"
+      }
+    },
+    "icons": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  }
+  
