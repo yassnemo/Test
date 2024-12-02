@@ -296,9 +296,6 @@ async function playGemMergeGame() {
             parseGemMergeRewards(gameResponse.data?.rewards, 'Initial rewards');
         }
 
-        // Store initial/resumed game state
-        await saveGameState(gameId, currentLevel);
-        
         // Play levels
         for (let level = currentLevel; level < 100; level++) {
             if (!isRunning) {
@@ -530,23 +527,3 @@ async function getUserInfoAndCoinCount() {
     }
 }
 
-// Reset daily limit at midnight
-function scheduleResetDailyLimit() {
-    const now = new Date();
-    const night = new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate() + 1, // the next day
-        0, 0, 0 // at 00:00:00 hours
-    );
-    const msToMidnight = night.getTime() - now.getTime();
-
-    setTimeout(() => {
-        dailyLimitReached = false;
-        chrome.storage.local.set({ dailyLimitReached: false }).catch(console.error);
-        addLog('Daily limit has been reset.');
-        scheduleResetDailyLimit(); // Schedule the next reset
-    }, msToMidnight);
-}
-
-scheduleResetDailyLimit()
